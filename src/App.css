@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+  font-family: 'Inter', sans-serif;
+  color: #001835;
+}
+
+.content{
+  @apply bg-gray-100 w-full ml-4 p-4;
+}
+
+.item-sidebar{
+  @apply flex items-center hover:bg-blue3 p-2 rounded-md;
+}
+
+.title{
+  @apply text-blue2 font-bold mb-1 text-lg;
+}
+
+.headtext{
+  @apply font-bold text-lg mb-4 text-blue2 uppercase;
+}
+
+.height{
+  height: calc(100% - 50px);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.height::-webkit-scrollbar {
+  display: none;
+}
