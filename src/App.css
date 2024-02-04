@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body{
+  font-family: 'Inter', sans-serif;
+  color: #001835;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.content{
+  @apply bg-gray-100 w-full ml-4 p-4;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.item-sidebar{
+  @apply flex items-center hover:bg-blue3 p-2 rounded-md;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.title{
+  @apply text-blue2 font-bold mb-1 text-lg;
 }
 
-.App-link {
-  color: #61dafb;
+.headtext{
+  @apply font-bold text-lg mb-4 text-blue2 uppercase;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.height{
+  height: calc(100% - 50px);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.height::-webkit-scrollbar {
+  display: none;
 }
