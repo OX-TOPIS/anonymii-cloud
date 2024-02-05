@@ -4,14 +4,28 @@ const Profile = () => {
 
   const [profileImage, setProfileImage] = useState("");
   const [profileRefreshImage, setProfileRefreshImage] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [refreshUsername, setRefreshUsername] = useState("");
+  const [refreshPassword, setRefreshPassword] = useState("");
+
 
   useEffect(() => {
     setProfileImage("avatar14.png");
+    setUsername("heyabaebey");
+    setPassword("kuykuykuykuy");
   }, []);
 
   useEffect(() => {
     setProfileRefreshImage(profileImage);
   }, [profileImage]);
+
+  useEffect(() => {
+    if (username !== "") {
+      setRefreshUsername("");
+  }
+  }, [username]);
+
 
   
   return (
@@ -30,10 +44,11 @@ const Profile = () => {
             <h2 className="text-blue2 font-bold mb-2">Change Username</h2>
             <input
               type="text"
-              className="mb-2 w-72 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2 placeholder-blue2 text-blue2"
-              placeholder="Username"
+              className="mb-2 w-72 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2 placeholder-blue2 text-blue2 font-bold"
+              placeholder="Username" value={username} disabled readonly
             />
-            <button className="w-72 bg-blue2 text-white mt-2 font-bold rounded-md p-2 mb-2">
+            <button className="w-72 bg-blue2 text-white mt-2 font-bold rounded-md p-2 mb-2"
+            onClick={() => document.getElementById("my_modal_2").showModal()}>
               Change Username
             </button>
           </div>
@@ -42,11 +57,13 @@ const Profile = () => {
             <h2 className="text-blue2 font-bold mb-2">Change Password</h2>
             <input
               type="password"
-              placeholder="Password"
-              className="w-72 mb-2 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2"
+              placeholder="Password" value={password}
+              className="w-72 mb-2 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold" disabled readonly
             />
+           
             {/* <input type="password" placeholder='Confirm Password'className='w-72 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2' /> */}
-            <button className="w-72 bg-blue2 text-white mt-2 font-bold rounded-md p-2 mb-2">
+            <button className="w-72 bg-blue2 text-white mt-2 font-bold rounded-md p-2 mb-2"
+            onClick={() => document.getElementById("my_modal_3").showModal()}>
               Change Password
             </button>
           </div>
@@ -54,6 +71,7 @@ const Profile = () => {
       </div>
 
       {/* dialog */}
+      {/* modal Avatar */}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
 
@@ -91,12 +109,56 @@ const Profile = () => {
               {/* if there is a button in form, it will close the modal */}
               <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setProfileRefreshImage(profileImage)}>Cancel</button>
               <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setProfileImage(profileRefreshImage)}>Save</button>
-              
-
             </form>
           </div>
         </div>
       </dialog>
+
+    {/* modal Username */}
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-white mb-3">Change your Username</h3>
+          <input
+              type="text"
+              className="mb-2 w-72 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2 placeholder-blue2 text-blue2 font-bold"
+              placeholder="new username" value={refreshUsername} onChange={e => setRefreshUsername(e.target.value)}
+            />
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setRefreshUsername("")}>Cancel</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setUsername(refreshUsername)}>Save</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      {/* modal password */}
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-white mb-3">Change Your Password</h3>
+          <input
+              type="password"
+              placeholder="new password"
+              className="w-72 mb-3 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
+            />
+            <input
+              type="password"
+              placeholder="confirm new password"
+              className="w-72 mb-2 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
+            />
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setProfileRefreshImage(profileImage)}>Cancel</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setProfileImage(profileRefreshImage)}>Save</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+     
     </div>
   );
 };
