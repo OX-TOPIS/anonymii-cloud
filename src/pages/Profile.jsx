@@ -1,10 +1,23 @@
-import React from "react";
+import React, {useState,  useEffect} from "react";
 
 const Profile = () => {
+
+  const [profileImage, setProfileImage] = useState("");
+  const [profileRefreshImage, setProfileRefreshImage] = useState("");
+
+  useEffect(() => {
+    setProfileImage("avatar14.png");
+  }, []);
+
+  useEffect(() => {
+    setProfileRefreshImage(profileImage);
+  }, [profileImage]);
+
+  
   return (
     <div className="content">
       <div className="h-10/12 flex flex-col space-y-10 items-center mt-6">
-        <img src="/avatar.png" alt="" className="w-56" />
+        <img src={profileImage} alt="" className="w-56" />
         <button
           className="w-72 bg-blue2 text-white mt-2 font-bold rounded-md p-2"
           onClick={() => document.getElementById("my_modal_1").showModal()}
@@ -43,14 +56,43 @@ const Profile = () => {
       {/* dialog */}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Select Your Avatar!</h3>
-          <p className="py-4">
-            Press ESC key or click the button below to close
-          </p>
+
+          <div className="grid grid-cols-3 mb-4">
+            <img src={profileRefreshImage} alt="" className="w-36 col-start-2" />
+          </div>
+          <h3 className="font-bold text-white mb-3">Select Your Avatar</h3>
+
+          <div class="grid grid-cols-4 gap-4 mb-2">
+            <img src="avatar.png" alt="avatar1" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar.png")}/>
+            <img src="avatar2.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar2.png")} />
+            <img src="avatar3.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar3.png")} />
+            <img src="avatar4.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar4.png")} />
+          </div>
+          <div class="grid grid-cols-4 gap-4 mb-2">
+            <img src="avatar5.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar5.png")} />
+            <img src="avatar6.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar6.png")} />
+            <img src="avatar7.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar7.png")} />
+            <img src="avatar8.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar8.png")} />
+          </div>
+          <div class="grid grid-cols-4 gap-4 mb-2">
+            <img src="avatar9.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar9.png")} />
+            <img src="avatar10.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar10.png")} />
+            <img src="avatar11.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar11.png")} />
+            <img src="avatar12.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar12.png")} />
+          </div>
+          <div class="grid grid-cols-4 gap-4 mb-2">
+            <img src="avatar13.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar13.png")} />
+            <img src="avatar14.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar14.png")} />
+            <img src="avatar15.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar15.png")} />
+            <img src="avatar16.png" alt="" className="w-32 cursor-pointer" onClick={() => setProfileRefreshImage("avatar16.png")} />
+          </div>
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2">Change Avatar</button>
+              <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setProfileRefreshImage(profileImage)}>Cancel</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setProfileImage(profileRefreshImage)}>Save</button>
+              
+
             </form>
           </div>
         </div>
