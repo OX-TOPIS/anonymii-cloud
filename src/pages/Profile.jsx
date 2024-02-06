@@ -283,17 +283,6 @@ const Profile = () => {
         )}
       </button>
     </div>
-          {/* <input
-              type="password"
-              placeholder="new password" value={refreshPassword} onChange={e => setRefreshPassword(e.target.value)}
-              className="w-72 mb-3 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
-            /> */}
-            {/* <input
-              type="password"
-              placeholder="confirm new password" value={refreshConfirmPassword} onChange={e => setRefreshConfirmPassword(e.target.value)}
-              className="w-72 mb-2 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
-            /> */}
-
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
