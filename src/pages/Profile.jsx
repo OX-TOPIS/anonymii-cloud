@@ -8,6 +8,7 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [refreshUsername, setRefreshUsername] = useState("");
   const [refreshPassword, setRefreshPassword] = useState("");
+  const [refreshConfirmPassword, setRefreshConfirmPassword] = useState("");
 
 
   useEffect(() => {
@@ -16,18 +17,50 @@ const Profile = () => {
     setPassword("kuykuykuykuy");
   }, []);
 
+  // ให้ใน modal มีภาพ avatar ปัจจุบัน
   useEffect(() => {
     setProfileRefreshImage(profileImage);
   }, [profileImage]);
 
-  useEffect(() => {
-    if (username !== "") {
-      setRefreshUsername("");
+  // useEffect(() => {
+  //   if (username !== "") {
+  //     setRefreshUsername("");
+  // }
+  // }, [username]);
+
+  // useEffect(() => {
+  //   if (password !== "") {
+  //     setRefreshPassword("");
+  //     setRefreshConfirmPassword("");
+  // }
+  // }, [password]);
+
+
+  const changeAvatar = () => {
+    setProfileImage(profileRefreshImage);
+    alert("success!")
   }
-  }, [username]);
 
+  const changeUsername = () => {
+    setUsername(refreshUsername);
+    setRefreshUsername("");
+    alert("success!")
+  }
 
-  
+  const changePassword = () => {
+    if (refreshPassword === refreshConfirmPassword){
+      setPassword(refreshPassword);
+      alert("success!");
+      setRefreshPassword("");
+      setRefreshConfirmPassword("");
+    }
+    else {
+      alert("รหัสผ่านไม่ตรงกัน!");
+      setRefreshPassword("");
+      setRefreshConfirmPassword("");
+    }
+  }
+
   return (
     <div className="content">
       <div className="h-10/12 flex flex-col space-y-10 items-center mt-6">
@@ -108,7 +141,7 @@ const Profile = () => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setProfileRefreshImage(profileImage)}>Cancel</button>
-              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setProfileImage(profileRefreshImage)}>Save</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={changeAvatar}>Save</button>
             </form>
           </div>
         </div>
@@ -128,7 +161,7 @@ const Profile = () => {
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
               <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setRefreshUsername("")}>Cancel</button>
-              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setUsername(refreshUsername)}>Save</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={changeUsername}>Save</button>
             </form>
           </div>
         </div>
@@ -140,19 +173,19 @@ const Profile = () => {
           <h3 className="font-bold text-white mb-3">Change Your Password</h3>
           <input
               type="password"
-              placeholder="new password"
+              placeholder="new password" value={refreshPassword} onChange={e => setRefreshPassword(e.target.value)}
               className="w-72 mb-3 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
             />
             <input
               type="password"
-              placeholder="confirm new password"
+              placeholder="confirm new password" value={refreshConfirmPassword} onChange={e => setRefreshConfirmPassword(e.target.value)}
               className="w-72 mb-2 outline-blue2 border-blue2 rounded-md p-2 bg-gray-100 border-2  placeholder-blue2 text-blue2 font-bold"
             />
           <div className="modal-action">
             <form method="dialog">
               {/* if there is a button in form, it will close the modal */}
-              <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => setProfileRefreshImage(profileImage)}>Cancel</button>
-              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={() => setProfileImage(profileRefreshImage)}>Save</button>
+              <button className="bg-neutral-600 text-white mt-2 mr-2 font-bold rounded-md p-2" onClick={() => {setRefreshPassword(""); setRefreshConfirmPassword("");}}>Cancel</button>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={changePassword}>Save</button>
             </form>
           </div>
         </div>
