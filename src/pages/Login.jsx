@@ -1,15 +1,48 @@
 import axios from 'axios';
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const handleLogin = (event) => {
-    axios.get("http://3.84.245.240:3500/").then((response) => {
-      console.log(response)
-    });
+  const userData = {
+    email: email,
+    userPassword: userPassword,
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    if (!email.trim()){
+      alert("กรุณากรอก email");
+      return;
+    }
+    else if (!userPassword.trim()){
+      alert("กรุณากรอก password");
+      return;
+    }
+
+    try {
+
+      const response = await axios.post('http://localhost:3500/auth/login', userData)
+
+      console.log(email);
+      console.log(userPassword);
+
+      if (response.status === 200){
+        console.log(response.data.accessToken);
+        alert("login success");
+        navigate('/');
+      }
+    } catch (error) {
+      console.error(error)
+      alert("Email or password incorrect");
+    }
   }
 
   function togglePasswordVisibility() {
@@ -27,10 +60,12 @@ const Login = () => {
         <h1 className='text-white font-bold text-3xl'>Anonymii</h1>
       </div>
       {/* USERNAME PASSWORD */}
-      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Email'/>
+      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Email'
+      onChange={e => setEmail(e.target.value)}/>
 
       <div className="relative ">
-        <input type={isPasswordVisible ? "text" : "password"} placeholder='Password'className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white' />
+        <input type={isPasswordVisible ? "text" : "password"} placeholder='Password'className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white' 
+        onChange={e => setUserPassword(e.target.value)} />
         <button type="button"
         className="absolute inset-y-0 right-0 flex items-center px-4 text-white font-bold"
         onClick={togglePasswordVisibility}
@@ -76,7 +111,9 @@ const Login = () => {
 
       
       <div className="flex flex-col items-center">
-        <Link to="/"><button onClick={handleLogin} className='w-72 bg-white text-fa1 font-bold rounded-md p-2 mb-2'>Login</button></Link>
+        {/* <Link to="/"> */}
+        <button type="submit" onClick={handleLogin} className='w-72 bg-white text-fa1 font-bold rounded-md p-2 mb-2'>Login</button>
+        {/* </Link> */}
         <p className='text-white'>Don't have an account? <Link to="/signup" className='underline font-bold'>Signup</Link></p>
       </div>
     </form>

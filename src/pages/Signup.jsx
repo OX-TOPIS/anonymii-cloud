@@ -1,8 +1,15 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
 
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [confirmUserPassword, setConfirmUserPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
@@ -11,6 +18,50 @@ const Signup = () => {
   }
   function toggleConfirmPasswordVisibility() {
     setIsConfirmPasswordVisible((prevState) => !prevState);
+  }
+
+  const userData = {
+    username: username,
+    email: email,
+    userPassword: userPassword,
+    confirmUserPassword: confirmUserPassword
+  };
+
+  const handleReg = async (event) => {
+    event.preventDefault();
+    if (!username.trim()) {
+      alert("กรุณากรอก username");
+      return;
+    }
+    else if (!email.trim()) {
+      alert("กรุณากรอก email");
+      return;
+    }
+    else if (!userPassword.trim()) {
+      alert("กรุณากรอก password");
+      return;
+    }
+    else if (!confirmUserPassword.trim()) {
+      alert("กรุณากรอก confirm password");
+      return;
+    }
+    else if (userPassword !== confirmUserPassword){
+      alert("รหัสผ่านไม่ตรงกัน");
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3500/auth/reg', userData)
+
+      if (response.status === 200){
+        alert("reg success");
+        navigate('/login');
+      }
+
+    } catch (error) {
+      console.error(error.response)
+    }
+
   }
 
   return (
@@ -24,16 +75,17 @@ const Signup = () => {
         <h1 className='text-white font-bold text-3xl'>Anonymii</h1>
       </div>
       {/* USERNAME PASSWORD */}
-      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Username'/>
-      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Email'/>
+      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Username'  onChange={e => setUsername(e.target.value)}/>
+      <input type="text" className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2 placeholder-white text-white' placeholder='Email'  onChange={e => setEmail(e.target.value)}/>
 
       {/* password */}
       <div className="relative ">
-        <input type={isPasswordVisible ? "text" : "password"} placeholder='Password' className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white' />
+        <input type={isPasswordVisible ? "text" : "password"} placeholder='Password' className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white'
+        onChange={e => setUserPassword(e.target.value)} />
         <button type="button"
         className="absolute inset-y-0 right-0 flex items-center px-4 text-white font-bold"
-        onClick={togglePasswordVisibility}
-      >
+        onClick={togglePasswordVisibility}>
+
         {isPasswordVisible ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,11 +127,11 @@ const Signup = () => {
 
       {/* confirm password */}
       <div className="relative">
-        <input type={isConfirmPasswordVisible ? "text" : "password"} placeholder='Confirm Password' className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white' />
+        <input type={isConfirmPasswordVisible ? "text" : "password"} placeholder='Confirm Password' className='w-72 outline-white border-white rounded-md p-2 bg-fa1 border-2  placeholder-white text-white' 
+        onChange={e => setConfirmUserPassword(e.target.value)}/>
         <button type="button"
         className="absolute inset-y-0 right-0 flex items-center px-4 text-white font-bold"
-        onClick={toggleConfirmPasswordVisibility}
-      >
+        onClick={toggleConfirmPasswordVisibility}>
         {isConfirmPasswordVisible ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +172,9 @@ const Signup = () => {
       </div>
       
       <div className="flex flex-col items-center">
-        <Link to="/"><button className='w-72 bg-white text-fa1 font-bold rounded-md p-2 mb-2'>Signup</button></Link>
+        {/* <Link to="/"> */}
+          <button type="submit" className='w-72 bg-white text-fa1 font-bold rounded-md p-2 mb-2' onClick={handleReg}>Signup</button>
+          {/* </Link> */}
         <p className='text-white'>Already have an account? <Link to="/login" className='underline font-bold'>Login</Link></p>
       </div>
     </form>
