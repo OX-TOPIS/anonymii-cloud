@@ -1,8 +1,8 @@
 import React from 'react'
 import { HiMiniUserGroup, HiMiniPencilSquare  } from "react-icons/hi2";
-const Card = ({ item }) => {
+const CardMyChanel = ({ item, onClick }) => {
   return (
-    <div className='bg-white w-72 h-32 rounded-md  p-2 overflow-hidden shadow-md hover:scale-105 transition-all duration-300 cursor-pointer'>
+    <div onClick={onClick} className='bg-white w-72 h-32 rounded-md  p-2 overflow-hidden shadow-md hover:scale-105 transition-all duration-300 cursor-pointer'>
       <h1 className='title'>{item.title}</h1>
       <hr className='text-blue1'></hr>
       <div className="space-y-4">
@@ -22,4 +22,4 @@ const Card = ({ item }) => {
   )
 }
 
-export default Card
+export default CardMyChanel

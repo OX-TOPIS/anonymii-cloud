@@ -1,15 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { BsSendFill } from "react-icons/bs";
 
-const ChatChannel = () => {
+const ChatChannel = ({chatId}) => {
+  const [message, setMessage] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch("/data.json");
+            const data = await response.json();
+            setMessage(data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    fetchData();
+  }, []);
+
+  const itemWithchatId = message.find(item => item.id === chatId);
+
   return (
     <div className="w-3/4 bg-gray border-2 border-white ">
 
       {/* TOP TAB */}
       <div className="h-18 shadow-md p-2 flex flex-col justify-center">
-        <h1 className="title">Thai education is bad</h1>
+        <h1 className="title">{itemWithchatId?.title}</h1>
         <p className="text-blue1 h-6 overflow-hidden text-sm">
-          Why Thai education is bad Why Thai education is bad
+        {itemWithchatId?.despriction}
         </p>
       </div>
 
