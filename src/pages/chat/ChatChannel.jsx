@@ -14,10 +14,9 @@ const ChatChannel = () => {
       </div>
 
       {/* MESSAGE */}
-      <div className="h-3/4 overflow-hidden height overflow-y-scroll bg-red-400" >
-        
+      <div className="h-3/4 overflow-hidden overflow-y-scroll" >
       {/* chat-start */}
-      <div className="chat chat-start pt-4 overflow-hidden">
+      <div className="chat chat-start pt-4  overflow-hidden">
         {/* Avatar */}
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
