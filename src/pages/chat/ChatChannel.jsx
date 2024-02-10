@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { BsSendFill } from "react-icons/bs";
+import { IoMdMore } from "react-icons/io";
 
 const ChatChannel = ({chatId}) => {
   const [message, setMessage] = useState([]);
@@ -23,11 +24,22 @@ const ChatChannel = ({chatId}) => {
     <div className="w-3/4 bg-gray border-2 border-white ">
 
       {/* TOP TAB */}
-      <div className="h-18 shadow-md p-2 flex flex-col justify-center">
-        <h1 className="title">{itemWithchatId?.title}</h1>
-        <p className="text-blue1 h-6 overflow-hidden text-sm">
-        {itemWithchatId?.despriction}
-        </p>
+      <div className="h-18 shadow-md p-2 flex flex-row justify-between items-center">
+        <div className="">
+          <h1 className="title">{itemWithchatId?.title}</h1>
+          <p className="text-blue1 h-6 overflow-hidden text-sm">
+          {itemWithchatId?.despriction}
+          </p>
+        </div>
+        
+        <details className="dropdown dropdown-end">
+          <summary className="m-1 btn"><IoMdMore /></summary>
+          <ul className="shadow menu dropdown-content bg-base-100 rounded-box w-48">
+            <li><a className='text-red-400'>Leave Channel</a></li>
+            <li><a className='text-red-400'>Delete Channel</a></li>
+          </ul>
+        </details>
+
       </div>
 
       {/* MESSAGE */}

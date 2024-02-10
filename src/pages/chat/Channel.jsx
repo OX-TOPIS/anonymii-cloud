@@ -9,8 +9,11 @@ const Channel = () => {
 
   // เอาค่ามาจาก MyChannel
   const location = useLocation();
-  const channelId = location.state?.channelId;
+  const channelId = location.state;
   
+  useEffect(() => {
+    setChatId(channelId);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +37,6 @@ const Channel = () => {
     <div className='bg-gray-100 w-full ml-4 flex overscroll-none h-screen'>
       <div className="w-1/4">
         <h1 className="font-bold text-sm text-blue2 uppercase pl-6" >All Messages</h1>
-        <h2>Channel ID: {channelId}</h2>
         <div className="height overflow-y-scroll pl-4">
         {message.map((item) => (
           <Message key={item.id} item={item} onClick={() => handleMessageClick(item.id)} />

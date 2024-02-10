@@ -48,7 +48,7 @@ const MyChannel = () => {
         <div className="grid grid-cols-4 gap-4 mx-auto ">
         
           {myChanel.map((item) => (
-            <Link to={{ pathname: "/channel", state: { channelId: item.id } }} key={item.id}>
+            <Link to="/channel" state= { item.id } key={item.id}>
               <CardMyChanel item={item} />
             </Link>
           ))}
@@ -75,7 +75,7 @@ const MyChannel = () => {
           <div className="modal-action">
             <form method="dialog">
               <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2">
-                Create
+                Create Channel
               </button>
             </form>
           </div>
