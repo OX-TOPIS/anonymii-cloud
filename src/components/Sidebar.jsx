@@ -1,7 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { HomeOutlined, UserOutlined, MessageOutlined, InboxOutlined, NotificationOutlined} from '@ant-design/icons';
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import { HomeOutlined, UserOutlined, MessageOutlined, InboxOutlined, NotificationOutlined, LoginOutlined, LogoutOutlined} from '@ant-design/icons';
+
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const usernameToken = localStorage.getItem('usernameByToken');
+  const imagesToken = localStorage.getItem('imagesByToken');
+
+  const logout = () => {
+    try {
+    localStorage.removeItem('usernameByToken')
+    localStorage.removeItem('emailByToken')
+    localStorage.removeItem('imagesByToken')
+    alert('ออกจากระบบแล้ว');
+    navigate('/login');
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
   return (
     <div className='flex h-screen bg-white w-52'>
       <div className="flex flex-col w-full items-center">
@@ -19,9 +37,14 @@ const Sidebar = () => {
         
         <div className="flex flex-col justify-center space-y-2">
           {/* SHOW AVATER USERNAME */}
-          <Link to="/profile">
+          <Link>
+          {imagesToken !== 'null' ? (
+            <img src={imagesToken} alt="" className='w-28' />
+          ) : (
             <img src="/avatar.png" alt="" className='w-28' />
-            <h2 className='text-center'>Ingfah bibi</h2>
+          )}
+            {/* <img src={avatar} alt="" className='w-28' /> */}
+            <h2 className='text-center mt-3 mb-1'>{usernameToken}</h2>
           </Link>
           
           {/* Message */}
@@ -40,7 +63,22 @@ const Sidebar = () => {
           <li className='w-36'><Link to="/mychannel" className='item-sidebar' ><InboxOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>My Channel</h1></Link></li>
           <li className='w-36'><Link to="/notifications" className='item-sidebar' ><NotificationOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Notifications</h1></Link></li>
           {/* Login */}
-          <li className='w-36 pt-36'><Link to="/login" className='item-sidebar' ><NotificationOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Login</h1></Link></li>
+
+          {usernameToken ? (
+            <li className='w-36 pt-36'>
+              <Link onClick={logout} className='item-sidebar' >
+                <LogoutOutlined className='pr-2 ml-2 text-blue1' />
+                <h1 className='text-blue1'>Logout</h1>
+              </Link>
+            </li>
+          ) : (
+            <li className='w-36 pt-36'>
+              <Link to="/login" className='item-sidebar' >
+                <LoginOutlined className='pr-2 ml-2 text-blue1' />
+                <h1 className='text-blue1'>Login</h1>
+              </Link>
+            </li>
+          )}
         </ul>
 
 

@@ -24,18 +24,6 @@ const Profile = () => {
     setProfileRefreshImage(profileImage);
   }, [profileImage]);
 
-  // useEffect(() => {
-  //   if (username !== "") {
-  //     setRefreshUsername("");
-  // }
-  // }, [username]);
-
-  // useEffect(() => {
-  //   if (password !== "") {
-  //     setRefreshPassword("");
-  //     setRefreshConfirmPassword("");
-  // }
-  // }, [password]);
 
 
   const changeAvatar = () => {
