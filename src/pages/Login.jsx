@@ -32,16 +32,13 @@ const Login = () => {
 
       const response = await axios.post('http://localhost:3500/auth/login', userData)
 
-      // console.log(email);
-      // console.log(userPassword);
-
       if (response.status === 200){
+        console.log(response.data);
         const userToken = decodeToken(response.data.accessToken);
-        // console.log(userToken.email)
+        console.log(userToken)
         localStorage.setItem('usernameByToken', userToken.username);
         localStorage.setItem('emailByToken', userToken.email);
-        // const items = localStorage.getItem('usernameByToken');
-        // console.log(items)
+        localStorage.setItem('imagesByToken', userToken.images);
         alert("login success");
         navigate('/');
       }
