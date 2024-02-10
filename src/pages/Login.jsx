@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { decodeToken } from "react-jwt";
 
 const Login = () => {
 
@@ -31,11 +32,16 @@ const Login = () => {
 
       const response = await axios.post('http://localhost:3500/auth/login', userData)
 
-      console.log(email);
-      console.log(userPassword);
+      // console.log(email);
+      // console.log(userPassword);
 
       if (response.status === 200){
-        console.log(response.data.accessToken);
+        const userToken = decodeToken(response.data.accessToken);
+        // console.log(userToken.email)
+        localStorage.setItem('usernameByToken', userToken.username);
+        localStorage.setItem('emailByToken', userToken.email);
+        // const items = localStorage.getItem('usernameByToken');
+        // console.log(items)
         alert("login success");
         navigate('/');
       }
