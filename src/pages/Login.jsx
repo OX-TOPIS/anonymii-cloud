@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   const handleLogin = () => {
-    axios.get("http://3.84.245.240:3500/").then((response) => {
-      console.log(response)
-    });
+    // axios.get("http://3.84.245.240:3500/").then((response) => {
+    //   console.log(response)
+    // });
   }
   return (
 <div className="bg-fa1 w-screen h-screen">

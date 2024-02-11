@@ -1,18 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import ChatChannel from "./ChatChannel";
 import Message from "../../components/Message";
 import { useLocation } from 'react-router-dom';
+import { io } from "socket.io-client";
 
 const Channel = () => {
   const [message, setMessage] = useState([]);
   const [chatId, setChatId] = useState(1)
-
+  const [user, setUser] = useState("ipxz4")
   // เอาค่ามาจาก MyChannel
   const location = useLocation();
   const channelId = location.state;
-  
+  const socket = useRef();
   useEffect(() => {
     setChatId(channelId);
+    socket.current = io("ws://localhost:8800");
+    socket.current.emit("new-user-add", user);
   }, []);
 
   useEffect(() => {
