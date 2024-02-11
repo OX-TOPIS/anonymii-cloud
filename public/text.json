@@ -1,0 +1,123 @@
+
+[
+{
+    "profile": {
+      "username": "heyabaebey",
+      "email": "heyabaebey@test.com",
+      "userPassword": "testja",
+      "avatar": "avatar11.png",
+      "noti": [
+        {
+          "message": "ingfah ได้เข้าร่วม we love nct! channel",
+          "date": "2023-10-05T00:00:00.000Z"
+        },
+        {
+          "message": "phuriq ได้ออกจาก we love nct! channel",
+          "date": "2024-01-25T00:00:00.000Z"
+        }
+      ],
+      "mychannel": [
+        {
+          "id": 12345,
+          "name": "we love nct!",
+          "description": "talk about nct",
+          "people": {
+            "count": 3,
+            "person": [
+              "heyabaebey",
+              "ingfah",
+              "palm"
+            ]
+          },
+          "createAt": "2020-10-08T00:00:00.000Z"
+        },
+        {
+          "id": 54321,
+          "name": "kmitl community",
+          "description": "community of dek ladkrabrang",
+          "people": {
+            "count": 5,
+            "person": [
+              "heyabaebey",
+              "ingfah",
+              "palm",
+              "trpop",
+              "phuriq"
+            ]
+          },
+          "createAt": "2022-07-06T00:00:00.000Z"
+        }
+      ],
+      "mymessage": [
+        {
+          "person": "trpop",
+          "message": [
+            {
+              "me": [
+                {
+                  "text": "nice to meet u",
+                  "date": "2023-12-25T00:00:00.000Z"
+                }
+              ],
+              "you": [
+                {
+                  "text": "nice to meet u too",
+                  "date": "2023-12-26T00:00:00.000Z"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "allchannel": [
+      {
+        "id": 12345,
+        "name": "we love nct!",
+        "description": "talk about nct",
+        "owner": "heyabaebey",
+        "people": {
+          "count": 3,
+          "person": [
+            "heyabaebey",
+            "ingfah",
+            "palm"
+          ]
+        },
+        "createAt": "2020-10-08T00:00:00.000Z"
+      },
+      {
+        "id": 54321,
+        "name": "kmitl community",
+        "description": "community of dek ladkrabrang",
+        "owner": "heyabaebey",
+        "people": {
+          "count": 5,
+          "person": [
+            "heyabaebey",
+            "ingfah",
+            "palm",
+            "trpop",
+            "phuriq"
+          ]
+        },
+        "createAt": "2022-07-06T00:00:00.000Z"
+      },
+      {
+        "id": 98765,
+        "name": "แนะนำของกินย่านลาดกระบัง",
+        "description": "รวมของอร่อยย่านลาดกระบังฮะ มาจอยกันๆ",
+        "owner": "ingfah",
+        "people": {
+          "count": 2,
+          "person": [
+            "ingfah",
+            "palm"
+          ]
+        },
+        "createAt": "2023-07-06T00:00:00.000Z"
+      }
+    ]
+  }
+
+]

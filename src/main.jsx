@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { Outlet } from "react-router-dom";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Outlet } from "react-router-dom";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
@@ -11,6 +11,7 @@ import MyChannel from "./pages/MyChannel.jsx";
 import Notifications from "./pages/Notifications.jsx"
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,11 +46,16 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
-  }
+  },
+  {
+    path: "/channel",
+    element: <Channel />,
+  },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.BrowserRouter>
+ReactDOM.render(
+  <BrowserRouter>
     <RouterProvider router={router} />
-  </React.BrowserRouter>
+  </BrowserRouter>,
+  document.getElementById("root")
 );
