@@ -12,11 +12,20 @@ const Profile = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
+  const imagesToken = localStorage.getItem('imagesByToken');
+  const usernameToken = localStorage.getItem('usernameByToken');
+
 
   useEffect(() => {
-    setProfileImage("avatar14.png");
-    setUsername("heyabaebey");
-    setPassword("kuykuykuykuy");
+    if (imagesToken !== 'null') {
+      setProfileImage(imagesToken);
+    }
+    else {
+      setProfileImage("avatar.png");
+    }
+    
+    setUsername(usernameToken);
+    setPassword("privacy");
   }, []);
 
   // ให้ใน modal มีภาพ avatar ปัจจุบัน
