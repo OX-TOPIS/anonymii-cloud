@@ -33,9 +33,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:3500/auth/login', userData)
 
       if (response.status === 200){
-        // console.log(response.data);
         const userToken = decodeToken(response.data.accessToken);
-        // console.log(userToken)
         localStorage.setItem('usernameByToken', userToken.username);
         localStorage.setItem('emailByToken', userToken.email);
         localStorage.setItem('imagesByToken', userToken.images);

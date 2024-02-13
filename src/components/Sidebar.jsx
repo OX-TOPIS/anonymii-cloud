@@ -20,6 +20,8 @@ const Sidebar = () => {
     
   }
 
+ 
+
   return (
     <div className='flex h-screen bg-white w-52'>
       <div className="flex flex-col w-full items-center">
