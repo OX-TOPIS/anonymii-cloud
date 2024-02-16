@@ -29,8 +29,8 @@ const Login = () => {
     }
 
     try {
-
-      const response = await axios.post('http://localhost:3500/auth/login', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.post(`${apiUrl}/auth/login`, userData)
 
       if (response.status === 200){
         // console.log(response.data);

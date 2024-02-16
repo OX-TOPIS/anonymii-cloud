@@ -51,7 +51,8 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3500/auth/reg', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.post(`${apiUrl}/auth/reg`, userData)
 
       if (response.status === 200){
         alert("reg success");
