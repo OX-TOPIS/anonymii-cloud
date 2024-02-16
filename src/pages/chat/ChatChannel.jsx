@@ -75,7 +75,7 @@ const ChatChannel = ({ chatId, chatName, chatDescription }) => {
         {
           message.map((text) => (
             <div key={text.messageId}>
-              {text.message}
+              <p>{text.message} {text.username}</p>
             </div>
           ))
         }
