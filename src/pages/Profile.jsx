@@ -31,7 +31,7 @@ const Profile = () => {
     
     setUsername(usernameToken);
     setPassword("privacy");
-  }, []);
+  }, [imagesToken, usernameToken]);
 
   // ให้ใน modal มีภาพ avatar ปัจจุบัน
   useEffect(() => {
@@ -48,8 +48,8 @@ const Profile = () => {
       images: profileRefreshImage
     }
     try {
-
-      const response = await axios.put('http://localhost:3500/user/updateUser', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.put(`${apiUrl}/user/updateUser`, userData)
       if (response.status === 200){
         setProfileImage(profileRefreshImage)
         localStorage.setItem("imagesByToken", profileRefreshImage)
@@ -68,8 +68,8 @@ const Profile = () => {
       username: refreshUsername,
     }
     try {
-
-      const response = await axios.put('http://localhost:3500/user/updateUser', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.put(`${apiUrl}/user/updateUser`, userData)
       if (response.status === 200){
         setUsername(refreshUsername);
         localStorage.setItem("usernameByToken", refreshUsername)
@@ -100,7 +100,8 @@ const Profile = () => {
       newUserPassword: refreshPassword
     }
     try {
-      const response = await axios.put('http://localhost:3500/user/updateUser', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.put(`${apiUrl}/user/updateUser`, userData)
       if (response.status === 200){
         
         setRefreshPassword("");

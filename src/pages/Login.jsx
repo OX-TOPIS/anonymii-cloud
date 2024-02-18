@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { decodeToken } from "react-jwt";
 
@@ -29,11 +29,13 @@ const Login = () => {
     }
 
     try {
-
-      const response = await axios.post('http://localhost:3500/auth/login', userData)
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.post(`${apiUrl}/auth/login`, userData)
 
       if (response.status === 200){
+        // console.log(response.data);
         const userToken = decodeToken(response.data.accessToken);
+        // console.log(userToken)
         localStorage.setItem('usernameByToken', userToken.username);
         localStorage.setItem('emailByToken', userToken.email);
         localStorage.setItem('imagesByToken', userToken.images);
