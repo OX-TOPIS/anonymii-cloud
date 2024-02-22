@@ -1,26 +1,32 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import ChatChannel from "./ChatChannel";
 import Message from "../../components/Message";
 import { useLocation } from 'react-router-dom';
-
+import axios from 'axios'
+import socket from '../../socket';
 const Channel = () => {
-  const [message, setMessage] = useState([]);
-  const [chatId, setChatId] = useState(1)
-
+  const [chatId, setChatId] = useState(null)
+  const [chatName, setChatName] = useState(null)
+  const [chatDescription, setChatDescription] = useState(null)
+  const [ownerEmail, setOwnerEmail] = useState(null)
+  const [chatroom, setChatroom] = useState([])
+  const [user, setUser] = useState("ipxz4")
   // เอาค่ามาจาก MyChannel
   const location = useLocation();
-  const channelId = location.state;
-  
+  const apiUrl = process.env.REACT_APP_API_BASEURL
   useEffect(() => {
-    setChatId(channelId);
+    socket.emit("new-user-add", localStorage.getItem("emailByToken"));
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const response = await fetch("/data.json");
-            const data = await response.json();
-            setMessage(data);
+            const chatRoomres = await axios.get(`${apiUrl}/chat/getChatByEmail`, {
+              params:{
+                email: localStorage.getItem("emailByToken")
+              }
+            })
+            setChatroom(chatRoomres.data)
+            console.log(chatRoomres.data)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -28,23 +34,31 @@ const Channel = () => {
     fetchData();
   }, []);
 
-  const handleMessageClick = (id) => {
-    setChatId(id);
+  const handleMessageClick = (chatId, chatName, chatDescription, ownerEmail) => {
+    setChatId((prevChatId) => {
+      // Ensure prevChatId is up-to-date before updating
+      console.log('Previous chatId:', prevChatId);
+      // Set the new chatId
+      return chatId;
+    });
+    setChatName(chatName)
+    setChatDescription(chatDescription)
+    setOwnerEmail(ownerEmail)
   };
 
 
   return (
     <div className='bg-gray-100 w-full ml-4 flex overscroll-none h-screen'>
       <div className="w-1/4">
-        <h1 className="font-bold text-sm text-blue2 uppercase pl-6" >All Messages</h1>
+        <h1 className="font-bold text-sm text-blue2 uppercase pl-6" >All Channel</h1>
         <div className="height overflow-y-scroll pl-4">
-        {message.map((item) => (
-          <Message key={item.id} item={item} onClick={() => handleMessageClick(item.id)} />
+        {chatroom.map((item) => (
+          <Message key={item.chatId} item={item} onClick={() => handleMessageClick(item.chatId, item.chatName, item.chatDescription, item.ownerEmail)} />
         ))}
         </div>
         
       </div>
-      <ChatChannel chatId={chatId} />
+      <ChatChannel chatId={chatId} chatName={chatName} chatDescription={chatDescription} ownerEmail={ownerEmail} />
     </div>
   );
 };
