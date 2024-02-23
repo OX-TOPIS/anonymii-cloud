@@ -5,7 +5,10 @@ import axios from 'axios';
 
 const Home = () => {
   const [allChanel, setAllChanel] = useState([]);
+  // const emailToken = localStorage.getItem("emailByToken");
+  const [chatByEmail, setChatByEmail] = useState([]);
 
+  // GET ALL CHAT
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,11 +22,25 @@ const Home = () => {
     fetchData();
   }, []);
 
+  // GET CHANNEL BY EMAIL
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_BASEURL
+        const response = await axios.get(`${apiUrl}/chat/getChatByEmail`);
+        setChatByEmail(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
 
 
   return (
     <div className="content flex flex-col overscroll-none h-screen">
-    <h1 className='headtext'>homeeiei</h1>
+    <h1 className='headtext'>home</h1>
     
     {/* <div className="">{allChanel.title}</div> */}
     {/* {allChanel.map((item) => (

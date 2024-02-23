@@ -6,15 +6,15 @@ const Card = ({ item }) => {
 
   const usernameToken = localStorage.getItem('usernameByToken');
   const emailToken = localStorage.getItem('emailByToken');
+  const apiUrl = process.env.REACT_APP_API_BASEURL
   
-  const joinChat = async ({ emailToken, chatId, usernameToken, chatName }) => {
+  const joinChat = async ({ email, chatId, username, chatName }) => {
     try {
-      const apiUrl = process.env.REACT_APP_API_BASEURL
-      const response = await axios.post(`${apiUrl}/chat/joinChat`, { emailToken, chatId, usernameToken, chatName });
-      console.log(response.data);
+      const response = await axios.post(`${apiUrl}/chat/joinChat`, { email, chatId, username, chatName });
+      alert("success", response.data);
     } catch (error) {
       console.error('Error adding data:', error)
-      alert(error)
+      alert(`email: ${email}, chatId:${chatId}, username:${username}, chatName:${chatName}`)
     }
   };
 
@@ -22,7 +22,7 @@ const Card = ({ item }) => {
     <div className='bg-white w-72 h-32 rounded-md  p-2 overflow-hidden shadow-md hover:scale-105 transition-all duration-300'>
       <div className="flex justify-between items-center">
         <h1 className='title'>{item.chatName}</h1>
-        <button className='bg-blue-500 rounded-md text-white px-2 hover:bg-blue-700 font-bold' onClick={() => joinChat({ emailToken, chatId: item.chatId, usernameToken, chatName: item.chatName })}>Join</button>
+        <button className='bg-blue-500 rounded-md text-white px-2 hover:bg-blue-700 font-bold' onClick={() => joinChat({ email: emailToken, chatId: item.chatId, username: usernameToken, chatName: item.chatName })}>Join</button>
       </div>
       <hr className='text-blue1'></hr>
       <div className="space-y-4">
