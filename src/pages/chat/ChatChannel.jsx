@@ -3,17 +3,17 @@ import { BsSendFill } from "react-icons/bs";
 import { IoMdMore } from "react-icons/io";
 import axios from "axios";
 import socket from "../../socket";
-const ChatChannel = (
-  { chatId, 
-    chatName, 
-    chatDescription, 
-    ownerEmail, 
-    fetchData,
-    setChatId,
-    setChatName,
-    setChatDescription,
-    setOwnerEmail
-  }) => {
+const ChatChannel = ({
+  chatId,
+  chatName,
+  chatDescription,
+  ownerEmail,
+  fetchData,
+  setChatId,
+  setChatName,
+  setChatDescription,
+  setOwnerEmail,
+}) => {
   const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const apiUrl = process.env.REACT_APP_API_BASEURL;
@@ -66,22 +66,33 @@ const ChatChannel = (
   };
 
   // Delete Channel
-  const handleDelete = () => { };
-
-
-
+  const requestData1 = { chatId: chatId };
+  // Leave Channel
+  const handleDelete = async (chatId) => {
+    try {
+      await axios.delete(`${apiUrl}/chat/deleteChatroom`, { data: requestData1 });
+      fetchData();
+      setChatId(null);
+      setChatDescription(null);
+      setOwnerEmail(null);
+      setChatName(null);
+      setMessage([]);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+  };
 
   const requestData = { chatId: chatId, email: emailToken };
   // Leave Channel
   const handleLeave = async (chatId) => {
     try {
       await axios.delete(`${apiUrl}/chat/leaveChat`, { data: requestData });
-      fetchData()
-      setChatId(null)
-      setChatDescription(null)
-      setOwnerEmail(null)
-      setChatName(null)
-      setMessage([])
+      fetchData();
+      setChatId(null);
+      setChatDescription(null);
+      setOwnerEmail(null);
+      setChatName(null);
+      setMessage([]);
     } catch (error) {
       console.error("Error deleting data:", error);
     }
@@ -90,7 +101,9 @@ const ChatChannel = (
   return (
     <div className="w-3/4 bg-gray border-2 border-white ">
       {/* TOP TAB */}
-      <div className="h-18 shadow-md p-2 flex flex-row justify-between items-center">
+      {chatName == null ? (<div></div>) : 
+      (
+        <div className="h-18 shadow-md p-2 flex flex-row justify-between items-center">
         <div className="">
           <h1 className="title">
             {chatName} {chatId}
@@ -104,10 +117,11 @@ const ChatChannel = (
           <summary className="m-1 btn">
             <IoMdMore />
           </summary>
-          <ul className="shadow menu dropdown-content bg-base-100 rounded-box w-48">
+          {
+            <ul className="shadow menu dropdown-content bg-base-100 rounded-box w-48 z-50">
             {emailToken === ownerEmail ? (
               <li>
-                <a className="text-red-400" onClick={() => handleDelete()}>
+                <a className="text-red-400 " onClick={() => handleDelete()}>
                   Delete Channel
                 </a>
               </li>
@@ -117,34 +131,51 @@ const ChatChannel = (
                   Leave Channel
                 </a>
               </li>
-            )}
+            ) }
           </ul>
+          }
         </details>
       </div>
+      )}
 
-      {/* message */}
-      <div className="h-3/4 overflow-hidden overflow-y-scroll">
-        {message.map((text) => (
-          <div
-            className={`chat chat-${text.username === usernameToken ? "end" : "start"
-              } pt-4  overflow-hidden w-full`}
-          >
-            <div className="chat-image avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS chat bubble component"
-                  src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
-              </div>
-            </div>
-            <div className="chat-header">{text.username}</div>
-            <div className="chat-bubble">{text.message}</div>
+
+{/* ถ้ายังไม่กดเข้าห้องแชทหรือยังไม่มีห้องแชท และ Message*/}
+{
+  chatName == null ? (
+    <div className="h-3/4 flex items-center justify-center text-fa1">Please join the chat room or select a chat room.</div>
+  ) : 
+  (
+    <div className="h-3/4 overflow-hidden overflow-y-scroll">
+    {message.map((text) => (
+      <div
+        className={`chat chat-${
+          text.username === usernameToken ? "end" : "start"
+        } pt-4  overflow-hidden w-full`}
+      >
+        <div className="chat-image avatar">
+          <div className="w-10 rounded-full">
+            <img
+              alt="Tailwind CSS chat bubble component"
+              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+            />
           </div>
-        ))}
+        </div>
+        <div className="chat-header">{text.username}</div>
+        <div className="chat-bubble">{text.message}</div>
       </div>
+    ))}
+  </div>
+  )
+}
+
+
+      
 
       {/* BOX INPUT Channel */}
-      <div className="flex justify-center items-center">
+      {
+        chatName == null ? (<div></div>) :
+        (
+          <div className="flex justify-center items-center">
         <input
           value={newMessage}
           onChange={(e) => {
@@ -160,6 +191,9 @@ const ChatChannel = (
           />
         </button>
       </div>
+        )
+      }
+      
     </div>
   );
 };

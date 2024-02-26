@@ -10,7 +10,7 @@ const CardMyChanel = ({ item, onClick }) => {
         <div className="flex justify-between">
           <div className="flex items-center space-x-2">
             <HiMiniUserGroup className='text-xl text-blue1'/>
-            <p className='text-blue1'>{item.people}</p>
+            <p className='text-blue1'>{item.user_count}</p>
           </div>
           <div className="flex items-center space-x-2">
             <img src="/avatar.png" alt="" className="w-6" />
