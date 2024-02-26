@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, MessageOutlined, InboxOutlined, NotificationOutlined, LoginOutlined, LogoutOutlined} from '@ant-design/icons';
 
@@ -19,8 +19,6 @@ const Sidebar = () => {
     }
     
   }
-
- 
 
   return (
     <div className='flex h-screen bg-white w-52'>

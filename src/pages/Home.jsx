@@ -1,18 +1,38 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import Card from '../components/Card'
+import axios from 'axios';
 
 const Home = () => {
   const [allChanel, setAllChanel] = useState([]);
+  // const emailToken = localStorage.getItem("emailByToken");
+  const [chatByEmail, setChatByEmail] = useState([]);
 
+  // GET ALL CHAT
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const response = await fetch("/data.json");
-            const data = await response.json();
-            setAllChanel(data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+      try {
+        const apiUrl = process.env.REACT_APP_API_BASEURL
+        const response = await axios.get(`${apiUrl}/chat/getAllChat`);
+        setAllChanel(response.data);
+        console.log(response)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // GET CHANNEL BY EMAIL
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_BASEURL
+        const response = await axios.get(`${apiUrl}/chat/getChatByEmail`);
+        setChatByEmail(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
     fetchData();
   }, []);
@@ -32,7 +52,7 @@ const Home = () => {
     <div className="height overflow-y-scroll">
       <div className="grid grid-cols-4 gap-4 mx-auto ">
       {allChanel.map((item) => (
-        <Card key={item.id} item={item} />
+        <Card key={item.chatId} item={item} />
       ))}
       </div>
     </div>
