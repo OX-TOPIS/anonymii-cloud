@@ -1,41 +1,32 @@
 import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom';
 import Card from '../components/Card'
 import axios from 'axios';
 
 const Home = () => {
   const [allChanel, setAllChanel] = useState([]);
-  // const emailToken = localStorage.getItem("emailByToken");
-  const [chatByEmail, setChatByEmail] = useState([]);
-
-  // GET ALL CHAT
+  const emailToken = localStorage.getItem("emailByToken");
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_BASEURL
-        const response = await axios.get(`${apiUrl}/chat/getAllChat`);
-        setAllChanel(response.data);
-        console.log(response)
+        const apiUrl = process.env.REACT_APP_API_BASEURL;
+        const allChatResponse = await axios.get(`${apiUrl}/chat/getAllChat`);
+        const chatByEmailResponse = await axios.get(`${apiUrl}/chat/getChatByEmail`, { params: { email: emailToken } });
+  
+        if (allChatResponse.data && chatByEmailResponse.data) {
+          const filteredChannels = allChatResponse.data.filter(channel => {
+            return !chatByEmailResponse.data.some(chat => chat.chatId === channel.chatId);
+          });
+  
+          setAllChanel(filteredChannels);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [allChanel]);
 
-  // GET CHANNEL BY EMAIL
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_BASEURL
-        const response = await axios.get(`${apiUrl}/chat/getChatByEmail`);
-        setChatByEmail(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, []);
 
 
 
@@ -43,10 +34,6 @@ const Home = () => {
     <div className="content flex flex-col overscroll-none h-screen">
     <h1 className='headtext'>home</h1>
     
-    {/* <div className="">{allChanel.title}</div> */}
-    {/* {allChanel.map((item) => (
-        <div className="" key={item.id}>{item.title}</div>
-    ))} */}
 
     {/* CARD */}
     <div className="height overflow-y-scroll">
