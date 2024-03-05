@@ -10,16 +10,18 @@ const MyChannel = () => {
   const [chatName, setChatName] = useState("");
   const [chatDescription, setChatDescription] = useState("");
 
+  const [search, setSearch] = useState('');
+
+  const fetchData = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.get(`${apiUrl}/chat/getChatByEmail?email=${emailToken}`);
+      setMyChanel(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_BASEURL
-        const response = await axios.get(`${apiUrl}/chat/getChatByEmail?email=${emailToken}`);
-        setMyChanel(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -29,13 +31,13 @@ const MyChannel = () => {
     ownerEmail: emailToken
   };
 
-  const handleCreateChannel = async (event) => {
-    event.preventDefault();
+  const handleCreateChannel = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_BASEURL
       const response = await axios.post(`${apiUrl}/chat/createChat`, channelData)
       if (response.status === 200){
-        alert("create success");
+        // setMyChanel(response.data)
+        fetchData();
       }
     } catch (error) {
       console.error(error.response)
@@ -45,10 +47,20 @@ const MyChannel = () => {
 
   return (
     <div className="content flex flex-col overscroll-none h-screen">
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         <div className="headtext">My Channel</div>
+        
+
+        {/* Search */}
+        <input type="text" 
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder='Search...'
+        className='px-2 py-1 rounded-lg focus:outline-none'
+        />
+
+
         <button
-          className="bg-blue2 text-white mt-2 font-bold rounded-md p-2"
+          className="bg-blue2 text-white mt-2 font-bold rounded-md px-2 py-1 mb-2"
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
           + Channel
@@ -59,7 +71,13 @@ const MyChannel = () => {
       <div className="height overflow-y-scroll">
         <div className="grid grid-cols-4 gap-4 mx-auto ">
         
-          {myChanel.map((item) => (
+          {myChanel
+          .filter((item) => {
+            return search.toLowerCase() === ''
+              ? item
+              : item.chatName.toLowerCase().includes(search);
+          })
+          .map((item) => (
             <Link to="/channel" state= { item.chatId } key={item.chatId}>
               <CardMyChanel item={item} />
             </Link>
@@ -89,7 +107,7 @@ const MyChannel = () => {
           </label>
           <div className="modal-action">
             <form method="dialog">
-              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={handleCreateChannel}>
+              <button className="bg-blue2 text-white mt-2 font-bold rounded-md p-2" onClick={()=>handleCreateChannel()}>
                 Create Channel
               </button>
             </form>

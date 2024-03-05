@@ -5,6 +5,7 @@ import axios from 'axios';
 const Home = () => {
   const [allChanel, setAllChanel] = useState([]);
   const emailToken = localStorage.getItem("emailByToken");
+  const [search, setSearch] = useState('');
   
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +33,31 @@ const Home = () => {
 
   return (
     <div className="content flex flex-col overscroll-none h-screen">
-    <h1 className='headtext'>home</h1>
+
+    <div className="flex items-center justify-between">
+      <h1 className='headtext'>home</h1>
+      
+        <input type="text" 
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder='Search...'
+        className='px-2 py-1 rounded-lg focus:outline-none'
+        />
+    </div>
+    
     
 
     {/* CARD */}
     <div className="height overflow-y-scroll">
       <div className="grid grid-cols-4 gap-4 mx-auto ">
-      {allChanel.map((item) => (
+      {allChanel
+
+      .filter((item) => {
+        return search.toLowerCase() === ''
+          ? item
+          : item.chatName.toLowerCase().includes(search);
+      })
+
+      .map((item) => (
         <Card key={item.chatId} item={item} />
       ))}
       </div>
