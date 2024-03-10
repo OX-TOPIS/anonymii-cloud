@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { HiMiniUserGroup, HiMiniPencilSquare  } from "react-icons/hi2";
 import axios from 'axios';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const Card = ({ item }) => {
 
   const usernameToken = localStorage.getItem('usernameByToken');
@@ -11,10 +14,15 @@ const Card = ({ item }) => {
   const joinChat = async ({ email, chatId, username, chatName }) => {
     try {
       const response = await axios.post(`${apiUrl}/chat/joinChat`, { email, chatId, username, chatName });
-      alert("success", response.data);
+      // alert("success", response.data);
+      withReactContent(Swal).fire({
+        title: <i>Success!</i>,
+        text: 'You have successfully joined the chat',
+        icon: 'success',
+      })
     } catch (error) {
       console.error('Error adding data:', error)
-      alert(`email: ${email}, chatId:${chatId}, username:${username}, chatName:${chatName}`)
+      // alert(`email: ${email}, chatId:${chatId}, username:${username}, chatName:${chatName}`)
     }
   };
 

@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, {useState,  useEffect} from "react";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Profile = () => {
 
@@ -14,6 +16,7 @@ const Profile = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const [isOldPasswordVisible, setIsOldPasswordVisible] = useState(false);
+
 
   const emailToken = localStorage.getItem('emailByToken');
   const usernameToken = localStorage.getItem('usernameByToken');
@@ -53,12 +56,18 @@ const Profile = () => {
       if (response.status === 200){
         setProfileImage(profileRefreshImage)
         localStorage.setItem("imagesByToken", profileRefreshImage)
-        window.location.reload()
-        alert('update ur avatar success!')
+        withReactContent(Swal).fire({
+          title: <i>Success!</i>,
+          text: 'Your avatar has been successfully changed',
+          icon: 'success',
+        }).then(() => {
+          window.location.reload();
+        });
       }
     } catch (error) {
       console.log(error)
     }
+    
   }
 
   const changeUsername = async () => {
@@ -73,8 +82,15 @@ const Profile = () => {
       if (response.status === 200){
         setUsername(refreshUsername);
         localStorage.setItem("usernameByToken", refreshUsername)
-        window.location.reload()
-        alert('update ur username success!')
+        withReactContent(Swal).fire({
+          title: <i>Success!</i>,
+          text: 'Your username has been successfully changed',
+          icon: 'success',
+        }).then(() => {
+          window.location.reload();
+        });
+        
+        
       }
     } catch (error) {
       console.log(error)
@@ -107,15 +123,24 @@ const Profile = () => {
         setRefreshPassword("");
         setRefreshConfirmPassword("");
         setRefreshOldPassword("");
-        window.location.reload()
-        alert('update ur password success!')
+        withReactContent(Swal).fire({
+          title: <i>Success!</i>,
+          text: 'Your password has been successfully changed',
+          icon: 'success',
+        }).then(() => {
+          window.location.reload();
+        });
       }
     } catch (error) {
       console.log(error)
       setRefreshPassword("");
       setRefreshConfirmPassword("");
       setRefreshOldPassword("");
-      alert("old password incorrect!")
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Your old password is incorrect',
+        icon: 'error',
+      })
     }
   }
 

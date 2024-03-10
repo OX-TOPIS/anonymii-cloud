@@ -5,16 +5,17 @@ const Notifications = () => {
   const [allNoti, setAllNoti] = useState([]);
   const emailToken = localStorage.getItem('emailByToken');
   
+
+  const fetchData = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_BASEURL
+      const response = await axios.get(`${apiUrl}/notification/getNotification?email=${emailToken}`);
+      setAllNoti(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiUrl = process.env.REACT_APP_API_BASEURL
-        const response = await axios.get(`${apiUrl}/notification/getNotification/${emailToken}`);
-        setAllNoti(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
   }, []);
 
@@ -24,8 +25,8 @@ const Notifications = () => {
     <div className='content flex flex-col overscroll-none h-screen '>
       <div className="headtext">Notifications</div>
         <div className="height overflow-y-scroll">
-        {allNoti.map((item) => (
-          <BoxNoti key={item.message} item={item} />
+        {allNoti.map((item, index) => (
+          <BoxNoti key={index} item={item} />
         ))}
         </div>
     </div>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, MessageOutlined, InboxOutlined, NotificationOutlined, LoginOutlined, LogoutOutlined} from '@ant-design/icons';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const Sidebar = () => {
   const navigate = useNavigate();
   const usernameToken = localStorage.getItem('usernameByToken');
@@ -9,11 +12,17 @@ const Sidebar = () => {
 
   const logout = () => {
     try {
-    localStorage.removeItem('usernameByToken')
-    localStorage.removeItem('emailByToken')
-    localStorage.removeItem('imagesByToken')
-    alert('ออกจากระบบแล้ว');
-    navigate('/login');
+    withReactContent(Swal).fire({
+      title: <i>Success!</i>,
+      text: 'You have successfully logged out',
+      icon: 'success',
+    }).then(() => {
+      navigate('/login');
+      localStorage.removeItem('usernameByToken')
+      localStorage.removeItem('emailByToken')
+      localStorage.removeItem('imagesByToken')
+    });
+    
     } catch (error) {
       console.log(error)
     }
@@ -58,7 +67,7 @@ const Sidebar = () => {
 
         {/* sidebar items */}
         <ul className='space-y-2 mt-4'>
-          <li className='w-36'><Link to="/" className='item-sidebar'><HomeOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Home</h1></Link></li>
+          <li className='w-36'><Link to="/home" className='item-sidebar'><HomeOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Home</h1></Link></li>
           <li className='w-36'><Link to="/profile" className='item-sidebar' ><UserOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Profile</h1></Link></li>
           <li className='w-36'><Link to="/mychannel" className='item-sidebar' ><InboxOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>My Channel</h1></Link></li>
           <li className='w-36'><Link to="/notifications" className='item-sidebar' ><NotificationOutlined className='pr-2 ml-2 text-blue1' /><h1 className='text-blue1'>Notifications</h1></Link></li>

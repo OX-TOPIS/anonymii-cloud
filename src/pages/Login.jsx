@@ -3,6 +3,9 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { decodeToken } from "react-jwt";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const Login = () => {
 
   const navigate = useNavigate();
@@ -20,11 +23,19 @@ const Login = () => {
     event.preventDefault();
 
     if (!email.trim()){
-      alert("กรุณากรอก email");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your email',
+        icon: 'error',
+      })
       return;
     }
     else if (!userPassword.trim()){
-      alert("กรุณากรอก password");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your password',
+        icon: 'error',
+      })
       return;
     }
 
@@ -39,12 +50,21 @@ const Login = () => {
         localStorage.setItem('usernameByToken', userToken.username);
         localStorage.setItem('emailByToken', userToken.email);
         localStorage.setItem('imagesByToken', userToken.images);
-        alert("login success");
-        navigate('/');
+        withReactContent(Swal).fire({
+          title: <i>Success!</i>,
+          text: 'You have successfully logged in',
+          icon: 'success',
+        }).then(() => {
+          navigate('/home');
+        });
       }
     } catch (error) {
       console.error(error)
-      alert("Email or password incorrect");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Your email or password is incorrect',
+        icon: 'error',
+      })
     }
   }
 

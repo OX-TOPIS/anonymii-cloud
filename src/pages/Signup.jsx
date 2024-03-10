@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const Signup = () => {
 
   const navigate = useNavigate();
@@ -30,23 +33,43 @@ const Signup = () => {
   const handleReg = async (event) => {
     event.preventDefault();
     if (!username.trim()) {
-      alert("กรุณากรอก username");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your username',
+        icon: 'error',
+      })
       return;
     }
     else if (!email.trim()) {
-      alert("กรุณากรอก email");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your email',
+        icon: 'error',
+      })
       return;
     }
     else if (!userPassword.trim()) {
-      alert("กรุณากรอก password");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your password',
+        icon: 'error',
+      })
       return;
     }
     else if (!confirmUserPassword.trim()) {
-      alert("กรุณากรอก confirm password");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Please enter your confirm password',
+        icon: 'error',
+      })
       return;
     }
     else if (userPassword !== confirmUserPassword){
-      alert("รหัสผ่านไม่ตรงกัน");
+      withReactContent(Swal).fire({
+        title: <i>Oops...</i>,
+        text: 'Your Password do not match!',
+        icon: 'error',
+      })
       return;
     }
 
@@ -55,8 +78,13 @@ const Signup = () => {
       const response = await axios.post(`${apiUrl}/auth/reg`, userData)
 
       if (response.status === 200){
-        alert("reg success");
-        navigate('/login');
+        withReactContent(Swal).fire({
+          title: <i>Success!</i>,
+          text: 'You have successfully signed up, Let\'s sign in!',
+          icon: 'success',
+        }).then(() => {
+          navigate('/login');
+        });
       }
 
     } catch (error) {
