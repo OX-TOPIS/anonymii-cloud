@@ -155,34 +155,26 @@ const ChatChannel = ({
 
       {/* ถ้ายังไม่กดเข้าห้องแชทหรือยังไม่มีห้องแชท และ Message*/}
       {chatName == null ? (
-        <div className="h-3/4 flex items-center justify-center text-fa1">
+        <div className="h-3/4 flex items-center justify-center text-fa1 ">
           Please join the chat room or select a chat room.
         </div>
       ) : (
-        <div className="h-3/4 overflow-hidden overflow-y-scroll">
+        <div className="h-3/4 overflow-hidden overflow-y-scroll no-scrollbar">
           {message.map((text) => (
-            <div className="">
-              <div
-                className={`chat chat-${
-                  text.username === usernameToken ? "end" : "start"
-                } pt-4  overflow-hidden w-full`}
-              >
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
+            <div className="flex items-center justify-start">
+              <div className="w-10 rounded-full m-2">
                   <img
-              alt="Tailwind CSS chat bubble component"
-              src={text.images == null ? '/avatar.png': text.images}
-            />
-                  </div>
-                </div>
-                <div className="chat-header">
-                {text.username}
-                </div>
-                <div className="chat-bubble">{text.message}</div>
-                <div className="chat-footer opacity-50">{ text.messagesTimestamp && format(parseISO(text.messagesTimestamp), "dd/MM/yyyy HH:mm:ss") }</div>
+                  src={text.images == null ? '/avatar.png': text.images}
+                  />
               </div>
-              
+              <div className="my-2">
+                <p className="text-blue1">{ text.username }</p>
+                <div className="bg-blue2 rounded-t-full rounded-br-full text-white p-2 text-md">{ text.message }</div>
+                <p className="text-xs text-blue1">{ text.messagesTimestamp && format(parseISO(text.messagesTimestamp), "dd/MM/yyyy HH:mm:ss") }</p>
+              </div>
+
             </div>
+
           ))}
         </div>
       )}
