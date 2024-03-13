@@ -67,7 +67,7 @@ const Channel = () => {
                   item.chatId,
                   item.chatName,
                   item.chatDescription,
-                  item.ownerEmail
+                  item.username
                 )
               }
             />

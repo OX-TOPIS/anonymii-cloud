@@ -18,7 +18,7 @@ const Message = ({item, onClick}) => {
               <img src={item.ownerImages} alt="" className="w-6" />
             )}
 
-              <div className="text-sm">{item.ownerEmail}</div>
+              <div className="text-sm">{item.username}</div>
             </div>
           </div>
         </div>

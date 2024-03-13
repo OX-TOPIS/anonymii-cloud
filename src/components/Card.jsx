@@ -47,7 +47,7 @@ const Card = ({ item }) => {
               <img src={item.ownerImages} alt="" className="w-6" />
             )}
             {/* <img src={item.ownerImages} alt="" className="w-6" /> */}
-            <div className="">{item.ownerEmail}</div>
+            <div className="">{item.username}</div>
           </div>
         </div>
       </div>
